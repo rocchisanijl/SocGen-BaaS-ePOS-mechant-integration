@@ -1,0 +1,6 @@
+# ignore all logs
+*.log
+./socgen-epos-java/.settings
+./socgen-epos-nodeJS/.settings
+./socgen-epos-nodeJS/node_modules/*
+**node_modules

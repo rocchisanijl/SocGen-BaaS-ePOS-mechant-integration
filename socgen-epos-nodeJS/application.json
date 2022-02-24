@@ -1,0 +1,63 @@
+{
+    "amount": 114,
+    "customerId": "701943",
+    "normalReturnUrl": "http://merchanttesting.merchanttestingmerchant.com",
+     "orderId": "PM_050b109",
+    "paymentMean": "REVOLVINGPOS",
+    "shoppingCartDetail": {
+        "mainProduct": "PANTALON B MAGO",
+        "shoppingCartTotalAmount": "95",
+        "shoppingCartTotalQuantity": "2",
+        "SKU": "14",
+        "shoppingCartItemList": {
+            "productName": "PANTALON B MAGO",
+            "productUnitAmount": "47.50",
+            "productQuantity": "2",
+            "productDescription": "desc"
+        }
+    },
+    "customerAddress": {
+        "city": "GAP",
+        "street": "10",
+        "zipCode": "75000",
+        "country": "FR"
+    },
+    "billingAddress": {
+        "city": "GAP",
+        "street": "voltaire",
+        "zipCode": "75000",
+        "country": "FR",
+        "company": "DHL"
+    },
+    "deliveryAddress": {
+        "city": "GAP",
+        "street": "voltaire",
+        "zipCode": "75000",
+        "country": "FR",
+        "company": "DHL"
+    },
+    "customerContact": {
+        "legalId": "",
+        "email": "meriem.loukili@tesselate.com",
+        "lastName": "loukili",
+        "firstName": "meriem",
+        "mobile": "+33234749393",
+        "phone": "+49234749393"
+    },
+    "billingContact": {
+        "legalId": "",
+        "email": "test@test.com",
+        "lastName": "test",
+        "firstName": "test",
+        "mobile": "0334749393",
+        "phone": "0334749393"
+    },
+    "deliveryContact": {
+        "email": "test@test.com",
+        "lastName": "test",
+        "firstName": "test",
+        "mobile": "0334749393",
+        "phone": "0334749393"
+    }
+   
+}
