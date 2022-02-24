@@ -12,7 +12,7 @@ The SmartCredit journey consist of:
   5. Customer is inviting to complete its application form and submit it.
   6. In case of a credit journey, customer will be redirected to our KYC partner for a video identification and to sign, download its contract. 
   7. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
-     - Use API /api/v1/customerApplications to get status of a customer demand
+     - Use API [/api/v1/customerApplications](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/getApplications) to get status of a customer demand
   8. Other possible statuses are:
      - **PRE-ACCEPTED**: Application demand has been pre-accepted waiting for KYC next steps. In some case, demands are waiting for back-office analysis. In such case, a manual procedure will be necessary to release the goods.
      - **KYC-SUCCESSFUL**: KYC step is successful waiting for finalizing contract (normally this status is temporary and will be automatically passed to ACCEPTED). 
