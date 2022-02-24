@@ -22,7 +22,7 @@ The SmartCredit journey consist of:
 
 ## SMARTCREDIT SEQUENCE DIAGRAM:
 
-
+![This is an image](/documentation/EPOS%20flow%20technical%20lines.png)
 
 
 
