@@ -24,9 +24,6 @@ The SmartCredit journey consist of:
 
 ![This is an image](/documentation/EPOS_flow_technical_guidelines.png)
 
-
-
-
  
 # Authentication
 
@@ -35,26 +32,27 @@ API are secured with SG-CONNECT authentication server using oAuth2 credit creden
 An access token is required. A POST to SG CONNECT /access_token endpoint is necessary using your client Id and secret (See Merchant onboarding process). It is conformed to RFC 6749 specifications.
   
   **POST /sgconnect/oauth2/access_token**
-  This endpoint is described in OAuth2 standard to be used to retrieve an access token (except for implicit flow).
+  >This endpoint is described in OAuth2 standard to be used to retrieve an access token (except for implicit flow).
   It generates an Access Token (OAuth) for the asked scopes (only the authorized ones) using client id/secret.
-  - Request Headers
-   - Authorization – Basic with clientId:clientSecret encoded in base64 or mTLS with the your certificate, see the examples below.
-   - Content-Type – application/x-www-form-urlencoded
-  - Form Parameters
-    - string grant_type – Type of flow used
-    - string scope – List of scopes asked (separated by spaces)
-  - Response Headers
-    - Content-Type – application/json
-  - Response JSON Object
-    - access_token (string) – Access token
-    - id_token (string) – ID token
-    - scope (string) – List of scopes for which the token is valid for
-    - token_type (string) – Must be Bearer
-    - expires_in (int) – TTL of the access token
-  -Status Codes
-   - 200 OK – Request accepted, token provided
-   - 400 Bad Request – Mainly for invalid clients
-   - 401 Unauthorized – Bad credentials, please verify your client credentials
+  
+  1. Request Headers
+     - Authorization – Basic with clientId:clientSecret encoded in base64 or mTLS with the your certificate, see the examples below.
+     - Content-Type – application/x-www-form-urlencoded
+  2. Form Parameters
+     - string grant_type – Type of flow used
+     - string scope – List of scopes asked (separated by spaces)
+  3. Response Headers
+     - Content-Type – application/json
+  4. Response JSON Object
+     - access_token (string) – Access token
+     - id_token (string) – ID token
+     - scope (string) – List of scopes for which the token is valid for
+     - token_type (string) – Must be Bearer
+     - expires_in (int) – TTL of the access token
+  5. Status Codes
+     - 200 OK – Request accepted, token provided
+     - 400 Bad Request – Mainly for invalid clients
+     - 401 Unauthorized – Bad credentials, please verify your client credentials
 
 Example request:
 ~~~
