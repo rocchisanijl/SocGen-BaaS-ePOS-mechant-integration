@@ -27,7 +27,7 @@ The SmartCredit journey consist of:
  
 # Authentication
 
-API are secured with SG-CONNECT authentication server using oAuth2 credit credential flow. 
+API are secured with [SG-CONNECT](https://sso.sgmarkets.com/sgconnect) authentication server using oAuth2 credit credential flow. 
  
 An access token is required. A POST to SG CONNECT /access_token endpoint is necessary using your client Id and secret (See Merchant onboarding process). It is conformed to RFC 6749 specifications.
   
