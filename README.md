@@ -1,6 +1,6 @@
 # SocGen SmartCredit (ePOS) integration guide
 
-You can simply integrate the SmartCredit journey in your merchant website using APIs (see API documentation) and scripts samples [see scripts samples](samples-launching-scripts/)
+You can simply integrate the SmartCredit journey in your merchant website using APIs [see API documentation](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/v1)  and scripts samples [see scripts samples](samples-launching-scripts/)
 
 The SmartCredit journey consist of:
 
@@ -22,7 +22,7 @@ The SmartCredit journey consist of:
 
 ## SMARTCREDIT SEQUENCE DIAGRAM:
 
-![This is an image](/documentation/EPOS%20flow%20technical%20lines.png)
+![This is an image](/documentation/EPOS_flow_technical_guidelines.png)
 
 
 
