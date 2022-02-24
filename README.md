@@ -8,7 +8,7 @@ The SmartCredit journey consist of:
      - Some script sample is provided on how selecting the right payment method. Scripts are customizable according your needs.
   4. Customer is redirecting to the SmartCredit journey. According the payment method selected it will be either a credit or a split payment journey.
      - Use API /access_token to get your access token (see Authentication chapter below)
-     - Use API [/api/v1/customerApplications/_initialized](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/newApplication) to get redirect url or page
+     - Use API [/api/v1/customerApplications/_initialize](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/newApplication) to get redirect url or page
   5. Customer is inviting to complete its application form and submit it.
   6. In case of a credit journey, customer will be redirected to our KYC partner for a video identification and to sign, download its contract. 
   7. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
