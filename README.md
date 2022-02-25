@@ -5,20 +5,19 @@ You can simply integrate the SmartCredit journey in your merchant website using 
 The SmartCredit journey consist of:
 
   1. Customer selects the SmartCredit payment method within checkout process on merchant website.
-     - Some script sample is provided on how selecting the right payment method. Scripts are customizable according your needs.
-  4. Customer is redirecting to the SmartCredit journey. According the payment method selected it will be either a credit or a split payment journey.
+     - Some script sample is provided on how selecting the right payment method. For instance, prerequisite is that the place of residence of the applicant is in the specific country of the financing service provider. Scripts are customizable according your needs.
+  4. Customer is redirecting to the SmartCredit journey. According the payment method selected it will be either a fiancing credit (German resident cutsomers) or a split payment journey (French resident customers).
      - Use API /access_token to get your access token (see Authentication chapter below)
-     - Use API [/api/v1/customerApplications/_initialized](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/newApplication) to get redirect url or page
-  5. Customer is inviting to complete its application form and submit it.
-  6. In case of a credit journey, customer will be redirected to our KYC partner for a video identification and to sign, download its contract. 
+     - Use API [/api/v1/customerApplications/_initialize](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/newApplication) to get redirect url or page
+  5. Customer has to fill in the application form and submits it for an instant approval.
+  6. In case of a credit journey after **PRE-ACCEPTED** approval, the applicant is re-directed to our KYC partner Web ID to do a legitimation and an e-signing of the contract. 
   7. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
      - Use API [/api/v1/customerApplications](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/getApplications) to get status of a customer demand
   8. Other possible statuses are:
-     - **PRE-ACCEPTED**: Application demand has been pre-accepted waiting for KYC next steps. In some case, demands are waiting for back-office analysis. In such case, a manual procedure will be necessary to release the goods.
-     - **KYC-SUCCESSFUL**: KYC step is successful waiting for finalizing contract (normally this status is temporary and will be automatically passed to ACCEPTED). 
+     - **KYC-SUCCESSFUL**: KYC and E-Signing was successful, application is waiting to be put into ACCEPTED. 
      - **REJECTED**: application demand is rejected. Customer is redirected to the merchant website to select another payment method.
      - **ABORTED**: application demand encountered some problem. It could be technical, time-out or any other problems.
-  9. **Cancellation or reimbursement** post-checkout actions are enabled in the merchant portal.  After processing customer demands statuses will be updated accordingly.
+  9. **CANCELLED or REIMBURSED** post-checkout actions are enabled in the merchant portal.  After processing customer demands statuses will be updated accordingly.
 
 ## SMARTCREDIT SEQUENCE DIAGRAM:
 
@@ -89,4 +88,4 @@ As of today, no webhooks are available yet, but this is part of backlog. It will
 As of today, no CMS plugins (Magento, Shopify …) are available yet, but this is part of backlog. 
 
 # Give us your feedback
-We are pleased to receive your feedback on this documentation or any suggestion you may have. Feel free to use our Slack Channel.  
+We are pleased to receive your feedback on this documentation or any suggestion you may have. Feel free to use our [Slack Socgen-BaaS-SmartCredit integration channel](https://app.slack.com/client/T03458E3RK9/C034D81B9RU).  
