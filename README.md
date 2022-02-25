@@ -88,4 +88,4 @@ As of today, no webhooks are available yet, but this is part of backlog. It will
 As of today, no CMS plugins (Magento, Shopify …) are available yet, but this is part of backlog. 
 
 # Give us your feedback
-We are pleased to receive your feedback on this documentation or any suggestion you may have. Feel free to use our [Slack Socgen-BaaS-SmartCredit integration channel](https://app.slack.com/client/T03458E3RK9/C034D81B9RU).  
+We are pleased to receive your feedback on this documentation or any suggestion you may have. Feel free to use our [Slack Socgen-BaaS-SmartCredit integration Socgenbaassma-hcq2071.com channel](https://app.slack.com/client/T03458E3RK9/C034D81B9RU).  
