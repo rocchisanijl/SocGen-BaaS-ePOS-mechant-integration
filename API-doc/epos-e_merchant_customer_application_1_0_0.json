@@ -1,0 +1,419 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "SmartCredit (EPOS) eMerchant Customer Application",
+    "description" : "API provided by EPOS platform for launching SmartCredit journey, get customer application results.  This API is to be integrated within eMerchant web site at check-out process",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/FintechOS-EPOS/EPOS/v1",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://apimgm-socgenepos-uat.azure-api.net/Func-SocGenEPOS-UAT",
+    "description" : "ePos UAT environment"
+  }, {
+    "url" : "https://apimgm-socgenepos-prod.azure-api.net/Func-SocGenEPOS-PROD",
+    "description" : "ePOS production environment"
+  } ],
+  "security" : [ {
+    "SGConnect" : [ "api.epos-emerchant-initiate-customer-application.v1" ]
+  } ],
+  "paths" : {
+    "/api/v1/customerApplications/" : {
+      "post" : {
+        "tags" : [ "SmartCredit (EPOS)" ],
+        "summary" : "Initialize a SmartCredit application",
+        "description" : "Initialize a new SmartCredit and get redirect url to launch journey",
+        "operationId" : "newApplication",
+        "parameters" : [ {
+          "name" : "access_token",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Initiate a customer's journey after selecting a payment method",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Application"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "application created",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApplicationResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "unauthorized"
+          }
+        }
+      }
+    },
+    "/api/v1/customerApplications/do-search" : {
+      "post" : {
+        "tags" : [ "SmartCredit (EPOS)" ],
+        "summary" : "Return a list of SmartCredit applications",
+        "description" : "Returns all applications by merchant if the ApplicationRequest is empty otherwise it filters based on ApplicationRequest attributes",
+        "operationId" : "getApplications",
+        "parameters" : [ {
+          "name" : "access_token",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ApplicationRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "application created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApplicationDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customerApplications/{applicationId}" : {
+      "get" : {
+        "tags" : [ "SmartCredit (EPOS)" ],
+        "summary" : "Get a SmartCredit application by id",
+        "description" : "Get a application by id = internal application ID",
+        "operationId" : "getApplicationById",
+        "parameters" : [ {
+          "name" : "access_token",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "applicationId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "application created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApplicationDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Application" : {
+        "required" : [ "amount", "customerAddress", "customerContact", "customerId", "normalReturnUrl", "orderId", "paymentMean", "shoppingCartDetail" ],
+        "type" : "object",
+        "properties" : {
+          "normalReturnUrl" : {
+            "type" : "string",
+            "description" : "the Url to redirect the customer after he finishes his journey",
+            "format" : "url",
+            "example" : "https://returnURL/"
+          },
+          "paymentMean" : {
+            "$ref" : "#/components/schemas/PaymentMean"
+          },
+          "amount" : {
+            "type" : "number",
+            "description" : "total financed amount",
+            "format" : "decimal",
+            "example" : 114
+          },
+          "customerId" : {
+            "type" : "string",
+            "description" : "the customer's Id in the merchant's website",
+            "example" : "customer01"
+          },
+          "orderId" : {
+            "type" : "string",
+            "description" : "the order's Id in the merchant's website",
+            "example" : "ORD229"
+          },
+          "customerAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "billingAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "deliveryAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "customerContact" : {
+            "$ref" : "#/components/schemas/CustomerContact"
+          },
+          "billingContact" : {
+            "$ref" : "#/components/schemas/CustomerContact"
+          },
+          "deliveryContact" : {
+            "$ref" : "#/components/schemas/CustomerContact"
+          },
+          "shoppingCartDetail" : {
+            "$ref" : "#/components/schemas/ShoppingCartDetail"
+          }
+        },
+        "description" : "the application to the loan. Please note that the attributes billingAddress, deliveryAddress, billingContact and deliveryContact are obligatory for FranFinance products"
+      },
+      "CustomerAddress" : {
+        "required" : [ "city", "country", "street", "zipCode" ],
+        "type" : "object",
+        "properties" : {
+          "city" : {
+            "type" : "string",
+            "example" : "Paris"
+          },
+          "street" : {
+            "type" : "string",
+            "example" : "93 Avenue Embrun"
+          },
+          "zipCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 2560
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "ISO-3166-1 with two digits",
+            "example" : "FR"
+          }
+        }
+      },
+      "CustomerContact" : {
+        "required" : [ "email", "firstName", "lastName", "mobile", "phone" ],
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "example" : "David"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "David"
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "David@David.com"
+          },
+          "mobile" : {
+            "maxLength" : 15,
+            "pattern" : "^[0-9()\\+\\s]+$",
+            "type" : "string",
+            "example" : "484749393"
+          },
+          "phone" : {
+            "maxLength" : 15,
+            "pattern" : "^[0-9()\\+\\s]+$",
+            "type" : "string",
+            "example" : "484749393"
+          }
+        }
+      },
+      "ShoppingCartDetail" : {
+        "required" : [ "codeSKU", "mainProduct", "shoppingCartItemList", "shoppingCartTotalAmount", "shoppingCartTotalQuantity" ],
+        "type" : "object",
+        "properties" : {
+          "mainProduct" : {
+            "type" : "string",
+            "example" : "TV"
+          },
+          "shoppingCartTotalAmount" : {
+            "type" : "string",
+            "example" : "95"
+          },
+          "shoppingCartTotalQuantity" : {
+            "type" : "string",
+            "example" : "2"
+          },
+          "codeSKU" : {
+            "type" : "string",
+            "example" : "20"
+          },
+          "shoppingCartItemList" : {
+            "$ref" : "#/components/schemas/ShoppingCartItemList"
+          }
+        }
+      },
+      "ShoppingCartItemList" : {
+        "required" : [ "productDescription", "productName", "productQuantity", "productUnitAmount" ],
+        "type" : "object",
+        "properties" : {
+          "productName" : {
+            "type" : "string",
+            "example" : "PANTALON B MAGO"
+          },
+          "productUnitAmount" : {
+            "type" : "number",
+            "format" : "decimal",
+            "example" : 47.5
+          },
+          "productQuantity" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 2
+          },
+          "productDescription" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ApplicationDetails" : {
+        "type" : "object",
+        "properties" : {
+          "reference" : {
+            "type" : "string",
+            "description" : "customer application reference"
+          },
+          "orderId" : {
+            "type" : "string",
+            "description" : "merchant order Id ID"
+          },
+          "customerId" : {
+            "type" : "string",
+            "description" : "Merchant customer Id reference"
+          },
+          "createdOn" : {
+            "type" : "string",
+            "description" : "Customer application date creation",
+            "format" : "date-time"
+          },
+          "modifiedOn" : {
+            "type" : "string",
+            "description" : "Customer application modification date",
+            "format" : "date-time"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/Status"
+          },
+          "paymentProvider" : {
+            "$ref" : "#/components/schemas/PaymentProvider"
+          },
+          "paymentProviderLabel" : {
+            "type" : "string",
+            "description" : "name of payment provider"
+          },
+          "paymentMean" : {
+            "$ref" : "#/components/schemas/PaymentMean"
+          },
+          "paymentMeanLabel" : {
+            "type" : "string",
+            "description" : "payment provider method label"
+          }
+        },
+        "description" : "the details of an application returned by FTOS"
+      },
+      "PaymentMean" : {
+        "type" : "string",
+        "description" : "list of availabe payment means",
+        "enum" : [ "FRF_3X", "FRF_4X", "FRF_3X_F", "FRF_4X_F", "REVOLVINGPOS" ]
+      },
+      "Status" : {
+        "type" : "string",
+        "description" : "status of an application",
+        "enum" : [ "INITIALIZED", "PRE-ACCEPTED", "KYC SUCCESSFUL", "ACCEPTED", "REJECTED", "ABORTED" ]
+      },
+      "PaymentProvider" : {
+        "type" : "string",
+        "description" : "Payment provider method identifier",
+        "enum" : [ "FRF", "HB" ]
+      },
+      "ApplicationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "orderId" : {
+            "type" : "string",
+            "description" : "the identifier in the merchant portal",
+            "example" : "orderID123"
+          }
+        },
+        "description" : "attributes  to filter on applications"
+      },
+      "ApplicationResponse" : {
+        "type" : "string",
+        "description" : "response of the loan request: html (for FranFinance provider) redirection page or URL (for Hanseatic Bank provider) where the customer can complete his journey",
+        "allOf" : [ {
+          "format" : "url"
+        }, {
+          "format" : "html"
+        }, {
+          "example" : "https://app-b2cproxy-socgenepos-uat.azurewebsites.net/hblo?auxiliaryDataId==da7ec97e-8c19-4814-87e5-a7aa5063bf00&culture=de-DE"
+        } ]
+      }
+    },
+    "securitySchemes" : {
+      "SGConnect" : {
+        "type" : "oauth2",
+        "flows" : {
+          "clientCredentials" : {
+            "tokenUrl" : "https://sso.sgmarkets.com/sgconnect/oauth2/token_access",
+            "scopes" : {
+              "api.epos-emerchant-initiate-customer-application.v1" : "normal scope v1 API"
+            }
+          }
+        }
+      }
+    }
+  }
+}
