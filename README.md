@@ -1,6 +1,7 @@
 # SocGen SmartCredit (ePOS) integration guide
 
 You can simply integrate the SmartCredit journey in your merchant website using APIs [see API documentation](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0)  and scripts samples [see scripts samples](samples-launching-scripts/)
+You can doawnload our API specifications [there](/API-doc).
 
 The SmartCredit journey consist of:
 
@@ -8,11 +9,11 @@ The SmartCredit journey consist of:
      - Some script sample is provided on how selecting the right payment method. For instance, prerequisite is that the place of residence of the applicant is in the specific country of the financing service provider. Scripts are customizable according your needs.
   4. Customer is redirecting to the SmartCredit journey. According the payment method selected it will be either a fiancing credit (German resident cutsomers) or a split payment journey (French resident customers).
      - Use API /access_token to get your access token (see Authentication chapter below)
-     - Use API [/api/v1/customerApplications/_initialize](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/newApplication) to get redirect url or page
+     - Use API [/api/v1/customerApplications/](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/newApplication) to get redirect url or page
   5. Customer has to fill in the application form and submits it for an instant approval.
   6. In case of a credit journey after **PRE-ACCEPTED** approval, the applicant is re-directed to our KYC partner Web ID to do a legitimation and an e-signing of the contract. 
   7. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
-     - Use API [/api/v1/customerApplications](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/getApplications) to get status of a customer demand
+     - Use API [/api/v1/customerApplications/do-search](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/getApplications) to get status of a customer demand
   8. Other possible statuses are:
      - **KYC-SUCCESSFUL**: KYC and E-Signing was successful, application is waiting to be put into ACCEPTED. 
      - **REJECTED**: application demand is rejected. Customer is redirected to the merchant website to select another payment method.
@@ -88,4 +89,4 @@ As of today, no webhooks are available yet, but this is part of backlog. It will
 As of today, no CMS plugins (Magento, Shopify …) are available yet, but this is part of backlog. 
 
 # Give us your feedback
-We are pleased to receive your feedback on this documentation or any suggestion you may have. Feel free to use our [Slack Socgen-BaaS-SmartCredit integration channel](https://app.slack.com/client/T03458E3RK9/C034D81B9RU).  
+We are pleased to receive your feedback on this documentation or any suggestion you may have. Feel free to use our [Slack](https://slack.com) Socgen-BaaS-SmartCredit integration  channel (connect to slack and enter "socgenbaassma-hcq2071.com" to join our channel).  
