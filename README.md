@@ -11,14 +11,14 @@ The SmartCredit journey consist of:
      - Use API /access_token to get your access token (see Authentication chapter below)
      - Use API [/api/v1/customerApplications/do-initialize](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/newApplication) to get redirect url or page
   5. Customer has to fill in the application form and submits it for an instant approval.
-  6. In case of a credit journey after **PRE-ACCEPTED** approval, the applicant is re-directed to our KYC partner Web ID to do a legitimation and an e-signing of the contract. 
-  7. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
-     - Use API [/api/v1/customerApplications/do-search](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/getApplications) to get status of a customer demand
-  8. Other possible statuses are:
+  6. In case of a credit journey after **PRE-ACCEPTED** approval, the applicant is re-directed to our KYC partner Web ID to do a legitimation and an e-signing of the contract. in case **KYC-SUCCESSFUL**, financing demand will be finilized on Lenders side. 
+  8. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
+     - Use API [/api/v1/customerApplications/do-search](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/getApplications) to get status of a customer demand or consult your [merchant portal](https://app-portal-socgenepos-prod.ondisplayftos.com/Main#/page/home/index) 
+  9. Other possible statuses are:
      - **KYC-SUCCESSFUL**: KYC and E-Signing was successful, application is waiting to be put into ACCEPTED. 
      - **REJECTED**: application demand is rejected. Customer is redirected to the merchant website to select another payment method.
      - **ABORTED**: application demand encountered some problem. It could be technical, time-out or any other problems.
-  9. **CANCELLED or REIMBURSED** post-checkout actions are enabled in the merchant portal.  After processing customer demands statuses will be updated accordingly.
+  10. **CANCELLED or REIMBURSED** post-checkout actions are enabled in the merchant portal.  After processing customer demands statuses will be updated accordingly.
 
 ## SMARTCREDIT SEQUENCE DIAGRAM:
 
