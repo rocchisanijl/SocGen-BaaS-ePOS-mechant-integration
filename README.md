@@ -15,7 +15,6 @@ The SmartCredit journey consist of:
   8. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
      - Use API [/api/v1/customerApplications/do-search](https://app.swaggerhub.com/apis/JLrocc/epos-e_merchant_customer_application/1.0.0#/SmartCredit%20(EPOS)/getApplications) to get status of a customer demand or consult your [merchant portal](https://app-portal-socgenepos-prod.ondisplayftos.com/Main#/page/home/index) 
   9. Other possible statuses are:
-     - **KYC-SUCCESSFUL**: KYC and E-Signing was successful, application is waiting to be put into ACCEPTED. 
      - **REJECTED**: application demand is rejected. Customer is redirected to the merchant website to select another payment method.
      - **ABORTED**: application demand encountered some problem. It could be technical, time-out or any other problems.
   10. **CANCELLED or REIMBURSED** post-checkout actions are enabled in the merchant portal.  After processing customer demands statuses will be updated accordingly.
