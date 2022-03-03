@@ -19,7 +19,7 @@
     "SGConnect" : [ "api.epos-emerchant-initiate-customer-application.v1" ]
   } ],
   "paths" : {
-    "/api/v1/customerApplications/" : {
+    "/api/v1/customerApplications/do-initialize" : {
       "post" : {
         "tags" : [ "SmartCredit (EPOS)" ],
         "summary" : "Initialize a SmartCredit application",
