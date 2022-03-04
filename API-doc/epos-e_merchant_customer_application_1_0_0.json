@@ -1,29 +1,20 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "title" : "SmartCredit (EPOS) eMerchant Customer Application",
-    "description" : "API provided by EPOS platform for launching SmartCredit journey, get customer application results.  This API is to be integrated within eMerchant web site at check-out process",
+    "title" : "EPOS eMerchant Customer Application",
+    "description" : "List of APIs provided by FTOS platform for merchants to allow their customers to initiate loan applications and manage them.",
     "version" : "1.0.0"
   },
   "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/FintechOS-EPOS/EPOS/v1",
+    "url" : "https://virtserver.swaggerhub.com/FintechOS-EPOS/EPOS/1.0.0",
     "description" : "SwaggerHub API Auto Mocking"
-  }, {
-    "url" : "https://apimgm-socgenepos-uat.azure-api.net/Func-SocGenEPOS-UAT",
-    "description" : "ePos UAT environment"
-  }, {
-    "url" : "https://apimgm-socgenepos-prod.azure-api.net/Func-SocGenEPOS-PROD",
-    "description" : "ePOS production environment"
-  } ],
-  "security" : [ {
-    "SGConnect" : [ "api.epos-emerchant-initiate-customer-application.v1" ]
   } ],
   "paths" : {
     "/api/v1/customerApplications/do-initialize" : {
       "post" : {
-        "tags" : [ "SmartCredit (EPOS)" ],
-        "summary" : "Initialize a SmartCredit application",
-        "description" : "Initialize a new SmartCredit and get redirect url to launch journey",
+        "tags" : [ "EPOS" ],
+        "summary" : "create loan application",
+        "description" : "create loan application",
         "operationId" : "newApplication",
         "parameters" : [ {
           "name" : "access_token",
@@ -47,7 +38,13 @@
         },
         "responses" : {
           "200" : {
-            "description" : "application created",
+            "description" : "application created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "unauthorized",
             "content" : {
               "text/plain" : {
                 "schema" : {
@@ -58,21 +55,15 @@
                 }
               }
             }
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          },
-          "404" : {
-            "description" : "unauthorized"
           }
         }
       }
     },
     "/api/v1/customerApplications/do-search" : {
       "post" : {
-        "tags" : [ "SmartCredit (EPOS)" ],
-        "summary" : "Return a list of SmartCredit applications",
-        "description" : "Returns all applications by merchant if the ApplicationRequest is empty otherwise it filters based on ApplicationRequest attributes",
+        "tags" : [ "EPOS" ],
+        "summary" : "return list of applications",
+        "description" : "Returns all applications by merchant if the Application Request is empty it filters based on ApplicationRequest attributes otherwise.",
         "operationId" : "getApplications",
         "parameters" : [ {
           "name" : "access_token",
@@ -118,9 +109,9 @@
     },
     "/api/v1/customerApplications/{applicationId}" : {
       "get" : {
-        "tags" : [ "SmartCredit (EPOS)" ],
-        "summary" : "Get a SmartCredit application by id",
-        "description" : "Get a application by id = internal application ID",
+        "tags" : [ "EPOS" ],
+        "summary" : "get application by id",
+        "description" : "get application by id",
         "operationId" : "getApplicationById",
         "parameters" : [ {
           "name" : "access_token",
@@ -170,7 +161,7 @@
         "properties" : {
           "normalReturnUrl" : {
             "type" : "string",
-            "description" : "the Url to redirect the customer after he finishes his journey",
+            "description" : "The Url to redirect the customer after he finishes his journey.",
             "format" : "url",
             "example" : "https://returnURL/"
           },
@@ -179,18 +170,17 @@
           },
           "amount" : {
             "type" : "number",
-            "description" : "total financed amount",
-            "format" : "decimal",
+            "description" : "Total financed amount.",
             "example" : 114
           },
           "customerId" : {
             "type" : "string",
-            "description" : "the customer's Id in the merchant's website",
+            "description" : "The customer's Id in the merchant's website.",
             "example" : "customer01"
           },
           "orderId" : {
             "type" : "string",
-            "description" : "the order's Id in the merchant's website",
+            "description" : "The order's Id in the merchant's website.",
             "example" : "ORD229"
           },
           "customerAddress" : {
@@ -215,31 +205,33 @@
             "$ref" : "#/components/schemas/ShoppingCartDetail"
           }
         },
-        "description" : "the application to the loan. Please note that the attributes billingAddress, deliveryAddress, billingContact and deliveryContact are obligatory for FranFinance products"
+        "description" : "Refers to the form that needs to be filled to submit the loan request. Please note that the attributes billingAddress, deliveryAddress, billingContact and deliveryContact are obligatory for FranFinance products."
       },
       "CustomerAddress" : {
         "required" : [ "city", "country", "street", "zipCode" ],
-        "type" : "object",
         "properties" : {
           "city" : {
             "type" : "string",
+            "description" : "City of the address.",
             "example" : "Paris"
           },
           "street" : {
             "type" : "string",
+            "description" : "Street of the address.",
             "example" : "93 Avenue Embrun"
           },
           "zipCode" : {
-            "type" : "integer",
-            "format" : "int32",
-            "example" : 2560
+            "type" : "number",
+            "description" : "zipcode of the address.",
+            "example" : 5000
           },
           "country" : {
             "type" : "string",
             "description" : "ISO-3166-1 with two digits",
             "example" : "FR"
           }
-        }
+        },
+        "description" : "Displaying the customer's personal contact address to deliver the ordered products from merchant."
       },
       "CustomerContact" : {
         "required" : [ "email", "firstName", "lastName", "mobile", "phone" ],
@@ -247,54 +239,61 @@
         "properties" : {
           "firstName" : {
             "type" : "string",
+            "description" : "First name of the contact.",
             "example" : "David"
           },
           "lastName" : {
             "type" : "string",
+            "description" : "Last name of the contact.",
             "example" : "David"
           },
           "email" : {
             "type" : "string",
+            "description" : "contact's email address with valid format.",
             "example" : "David@David.com"
           },
           "mobile" : {
-            "maxLength" : 15,
-            "pattern" : "^[0-9()\\+\\s]+$",
             "type" : "string",
+            "description" : "Mobile phone number for the contact.",
             "example" : "484749393"
           },
           "phone" : {
-            "maxLength" : 15,
-            "pattern" : "^[0-9()\\+\\s]+$",
             "type" : "string",
+            "description" : "Telephone number for the contact.",
             "example" : "484749393"
           }
-        }
+        },
+        "description" : "Displaying the customer's personal contact details including first name, last name and mobile phone."
       },
       "ShoppingCartDetail" : {
-        "required" : [ "codeSKU", "mainProduct", "shoppingCartItemList", "shoppingCartTotalAmount", "shoppingCartTotalQuantity" ],
+        "required" : [ "SKU", "mainProduct", "shoppingCartItemList", "shoppingCartTotalAmount", "shoppingCartTotalQuantity" ],
         "type" : "object",
         "properties" : {
           "mainProduct" : {
             "type" : "string",
+            "description" : "The most expensive product in the shopping cart.",
             "example" : "TV"
           },
           "shoppingCartTotalAmount" : {
             "type" : "string",
+            "description" : "Total amount of all products in the basket. This amount includes taxes but doesn't include any charges, fees and discounts.",
             "example" : "95"
           },
           "shoppingCartTotalQuantity" : {
             "type" : "string",
+            "description" : "Total quantity of all products in the basket.",
             "example" : "2"
           },
-          "codeSKU" : {
+          "SKU" : {
             "type" : "string",
+            "description" : "Merchant’s product identifier code.",
             "example" : "20"
           },
           "shoppingCartItemList" : {
             "$ref" : "#/components/schemas/ShoppingCartItemList"
           }
-        }
+        },
+        "description" : "Providing details about the products selected by client in the basket from merchant portal such as main product,the total amount and quantity of the cart."
       },
       "ShoppingCartItemList" : {
         "required" : [ "productDescription", "productName", "productQuantity", "productUnitAmount" ],
@@ -302,46 +301,49 @@
         "properties" : {
           "productName" : {
             "type" : "string",
+            "description" : "Name of the ordered product.",
             "example" : "PANTALON B MAGO"
           },
           "productUnitAmount" : {
             "type" : "number",
-            "format" : "decimal",
+            "description" : "Unit amount of the product.",
             "example" : 47.5
           },
           "productQuantity" : {
-            "type" : "integer",
-            "format" : "int32",
+            "type" : "number",
+            "description" : "Quantity of products in the shopping cart.",
             "example" : 2
           },
           "productDescription" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Detailed description of the ordered product."
           }
-        }
+        },
+        "description" : "Displaying the details of each product from shopping cart such as amount,quantity and product name."
       },
       "ApplicationDetails" : {
         "type" : "object",
         "properties" : {
-          "reference" : {
+          "applicationId" : {
             "type" : "string",
-            "description" : "customer application reference"
+            "description" : "Customer application reference."
           },
           "orderId" : {
             "type" : "string",
-            "description" : "merchant order Id ID"
+            "description" : "Merchant order Id ID."
           },
           "customerId" : {
             "type" : "string",
-            "description" : "Merchant customer Id reference"
+            "description" : "Merchant customer Id reference."
           },
           "createdOn" : {
             "type" : "string",
-            "description" : "Customer application date creation",
+            "description" : "Customer application date creation.",
             "format" : "date-time"
           },
           "modifiedOn" : {
             "type" : "string",
-            "description" : "Customer application modification date",
+            "description" : "Customer application modification date.",
             "format" : "date-time"
           },
           "status" : {
@@ -352,31 +354,31 @@
           },
           "paymentProviderLabel" : {
             "type" : "string",
-            "description" : "name of payment provider"
+            "description" : "Name of payment provider."
           },
           "paymentMean" : {
             "$ref" : "#/components/schemas/PaymentMean"
           },
           "paymentMeanLabel" : {
             "type" : "string",
-            "description" : "payment provider method label"
+            "description" : "Payment provider method label."
           }
         },
-        "description" : "the details of an application returned by FTOS"
+        "description" : "Refers to the details of an application returned by FTOS."
       },
       "PaymentMean" : {
         "type" : "string",
-        "description" : "list of availabe payment means",
+        "description" : "Refers to the type of financing product available for customers, in total 4 products for FRF and one product for HB (REVOLVINGPOS).",
         "enum" : [ "FRF_3X", "FRF_4X", "FRF_3X_F", "FRF_4X_F", "REVOLVINGPOS" ]
       },
       "Status" : {
         "type" : "string",
-        "description" : "status of an application",
+        "description" : "Displaying the status of the originated application through the different phases of the loan request.",
         "enum" : [ "INITIALIZED", "PRE-ACCEPTED", "KYC SUCCESSFUL", "ACCEPTED", "REJECTED", "ABORTED" ]
       },
       "PaymentProvider" : {
         "type" : "string",
-        "description" : "Payment provider method identifier",
+        "description" : "Refers to which bank is financing the loan request either FranFinance or Hanseatic Bank.",
         "enum" : [ "FRF", "HB" ]
       },
       "ApplicationRequest" : {
@@ -384,15 +386,15 @@
         "properties" : {
           "orderId" : {
             "type" : "string",
-            "description" : "the identifier in the merchant portal",
+            "description" : "Order number associated with the payment transaction from merchant website.",
             "example" : "orderID123"
           }
         },
-        "description" : "attributes  to filter on applications"
+        "description" : "Filtering the applications by order ID from merchant portal and adding other attributes later."
       },
       "ApplicationResponse" : {
         "type" : "string",
-        "description" : "response of the loan request: html (for FranFinance provider) redirection page or URL (for Hanseatic Bank provider) where the customer can complete his journey",
+        "description" : "Refers to the redirection to the loan request form either html (to redirect to FranFinance page) or URL ( to redirect to customer journey within Fintechos)",
         "allOf" : [ {
           "format" : "url"
         }, {
@@ -400,19 +402,6 @@
         }, {
           "example" : "https://app-b2cproxy-socgenepos-uat.azurewebsites.net/hblo?auxiliaryDataId==da7ec97e-8c19-4814-87e5-a7aa5063bf00&culture=de-DE"
         } ]
-      }
-    },
-    "securitySchemes" : {
-      "SGConnect" : {
-        "type" : "oauth2",
-        "flows" : {
-          "clientCredentials" : {
-            "tokenUrl" : "https://sso.sgmarkets.com/sgconnect/oauth2/token_access",
-            "scopes" : {
-              "api.epos-emerchant-initiate-customer-application.v1" : "normal scope v1 API"
-            }
-          }
-        }
       }
     }
   }
