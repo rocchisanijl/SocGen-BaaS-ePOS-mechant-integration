@@ -1,0 +1,400 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/FintechOS-EPOS/EPOS/1.0.0"
+  } ],
+  "info" : {
+    "description" : "List of APIs provided by FTOS platform for merchants to allow their customers to initiate loan applications and manage them.",
+    "version" : "1.0.0",
+    "title" : "EPOS eMerchant Customer Application"
+  },
+  "paths" : {
+    "/api/v1/customerApplications/do-initialize" : {
+      "post" : {
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "access_token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "tags" : [ "EPOS" ],
+        "summary" : "create loan application",
+        "operationId" : "newApplication",
+        "description" : "create loan application",
+        "responses" : {
+          "200" : {
+            "description" : "application created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "unauthorized",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApplicationResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Application"
+              }
+            }
+          },
+          "description" : "Initiate a customer's journey after selecting a payment method"
+        }
+      }
+    },
+    "/api/v1/customerApplications/do-search" : {
+      "post" : {
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "access_token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "tags" : [ "EPOS" ],
+        "summary" : "return list of applications",
+        "operationId" : "getApplications",
+        "description" : "Returns all applications by merchant if the Application Request is empty it filters based on ApplicationRequest attributes otherwise.",
+        "responses" : {
+          "200" : {
+            "description" : "application created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApplicationDetails"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ApplicationRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customerApplications/{applicationId}" : {
+      "get" : {
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "access_token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "applicationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "tags" : [ "EPOS" ],
+        "summary" : "get application by id",
+        "operationId" : "getApplicationById",
+        "description" : "get application by id",
+        "responses" : {
+          "200" : {
+            "description" : "application created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "404" : {
+            "description" : "unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApplicationDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Application" : {
+        "type" : "object",
+        "description" : "Refers to the form that needs to be filled to submit the loan request. Please note that the attributes billingAddress, deliveryAddress, billingContact and deliveryContact are obligatory for FranFinance products.",
+        "required" : [ "normalReturnUrl", "paymentMean", "amount", "customerId", "orderId", "customerAddress", "customerContact", "shoppingCartDetail" ],
+        "properties" : {
+          "normalReturnUrl" : {
+            "type" : "string",
+            "format" : "url",
+            "example" : "https://returnURL/",
+            "description" : "The Url to redirect the customer after he finishes his journey."
+          },
+          "paymentMean" : {
+            "$ref" : "#/components/schemas/PaymentMean"
+          },
+          "amount" : {
+            "type" : "number",
+            "example" : 114,
+            "description" : "Total financed amount."
+          },
+          "customerId" : {
+            "type" : "string",
+            "example" : "customer01",
+            "description" : "The customer's Id in the merchant's website."
+          },
+          "orderId" : {
+            "type" : "string",
+            "example" : "ORD229",
+            "description" : "The order's Id in the merchant's website."
+          },
+          "customerAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "billingAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "deliveryAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "customerContact" : {
+            "$ref" : "#/components/schemas/CustomerContact"
+          },
+          "billingContact" : {
+            "$ref" : "#/components/schemas/CustomerContact"
+          },
+          "deliveryContact" : {
+            "$ref" : "#/components/schemas/CustomerContact"
+          },
+          "shoppingCartDetail" : {
+            "$ref" : "#/components/schemas/ShoppingCartDetail"
+          }
+        }
+      },
+      "CustomerAddress" : {
+        "description" : "Displaying the customer's personal contact address to deliver the ordered products from merchant.",
+        "required" : [ "city", "street", "zipCode", "country" ],
+        "properties" : {
+          "city" : {
+            "type" : "string",
+            "example" : "Paris",
+            "description" : "City of the address."
+          },
+          "street" : {
+            "type" : "string",
+            "example" : "93 Avenue Embrun",
+            "description" : "Street of the address."
+          },
+          "zipCode" : {
+            "type" : "number",
+            "example" : 5000,
+            "description" : "zipcode of the address."
+          },
+          "country" : {
+            "type" : "string",
+            "example" : "FR",
+            "description" : "ISO-3166-1 with two digits"
+          }
+        }
+      },
+      "CustomerContact" : {
+        "description" : "Displaying the customer's personal contact details including first name, last name and mobile phone.",
+        "type" : "object",
+        "required" : [ "firstName", "lastName", "email", "mobile", "phone" ],
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "example" : "David",
+            "description" : "First name of the contact."
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "David",
+            "description" : "Last name of the contact."
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "David@David.com",
+            "description" : "contact's email address with valid format."
+          },
+          "mobile" : {
+            "type" : "string",
+            "example" : 484749393,
+            "description" : "Mobile phone number for the contact."
+          },
+          "phone" : {
+            "type" : "string",
+            "example" : 484749393,
+            "description" : "Telephone number for the contact."
+          }
+        }
+      },
+      "ShoppingCartDetail" : {
+        "description" : "Providing details about the products selected by client in the basket from merchant portal such as main product,the total amount and quantity of the cart.",
+        "type" : "object",
+        "required" : [ "mainProduct", "shoppingCartTotalAmount", "shoppingCartTotalQuantity", "SKU", "shoppingCartItemList" ],
+        "properties" : {
+          "mainProduct" : {
+            "type" : "string",
+            "example" : "TV",
+            "description" : "The most expensive product in the shopping cart."
+          },
+          "shoppingCartTotalAmount" : {
+            "type" : "string",
+            "example" : 95,
+            "description" : "Total amount of all products in the basket. This amount includes taxes but doesn't include any charges, fees and discounts."
+          },
+          "shoppingCartTotalQuantity" : {
+            "type" : "string",
+            "example" : 2,
+            "description" : "Total quantity of all products in the basket."
+          },
+          "SKU" : {
+            "type" : "string",
+            "example" : 20,
+            "description" : "Merchant’s product identifier code."
+          },
+          "shoppingCartItemList" : {
+            "$ref" : "#/components/schemas/ShoppingCartItemList"
+          }
+        }
+      },
+      "ShoppingCartItemList" : {
+        "description" : "Displaying the details of each product from shopping cart such as amount,quantity and product name.",
+        "type" : "object",
+        "required" : [ "productName", "productUnitAmount", "productQuantity", "productDescription" ],
+        "properties" : {
+          "productName" : {
+            "type" : "string",
+            "example" : "PANTALON B MAGO",
+            "description" : "Name of the ordered product."
+          },
+          "productUnitAmount" : {
+            "type" : "number",
+            "example" : 47.5,
+            "description" : "Unit amount of the product."
+          },
+          "productQuantity" : {
+            "type" : "number",
+            "example" : 2,
+            "description" : "Quantity of products in the shopping cart."
+          },
+          "productDescription" : {
+            "type" : "string",
+            "description" : "Detailed description of the ordered product."
+          }
+        }
+      },
+      "ApplicationDetails" : {
+        "description" : "Refers to the details of an application returned by FTOS.",
+        "type" : "object",
+        "properties" : {
+          "applicationId" : {
+            "type" : "string",
+            "description" : "Customer application reference."
+          },
+          "orderId" : {
+            "type" : "string",
+            "description" : "Merchant order Id ID."
+          },
+          "customerId" : {
+            "type" : "string",
+            "description" : "Merchant customer Id reference."
+          },
+          "createdOn" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Customer application date creation."
+          },
+          "modifiedOn" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Customer application modification date."
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/Status"
+          },
+          "paymentProvider" : {
+            "$ref" : "#/components/schemas/PaymentProvider"
+          },
+          "paymentProviderLabel" : {
+            "type" : "string",
+            "description" : "Name of payment provider."
+          },
+          "paymentMean" : {
+            "$ref" : "#/components/schemas/PaymentMean"
+          },
+          "paymentMeanLabel" : {
+            "type" : "string",
+            "description" : "Payment provider method label."
+          }
+        }
+      },
+      "PaymentMean" : {
+        "description" : "Refers to the type of financing product available for customers, in total 4 products for FRF and one product for HB (REVOLVINGPOS).",
+        "type" : "string",
+        "enum" : [ "FRF_3X", "FRF_4X", "FRF_3X_F", "FRF_4X_F", "REVOLVINGPOS" ]
+      },
+      "Status" : {
+        "description" : "Displaying the status of the originated application through the different phases of the loan request.",
+        "type" : "string",
+        "enum" : [ "INITIALIZED", "PRE-ACCEPTED", "KYC SUCCESSFUL", "ACCEPTED", "REJECTED", "ABORTED" ]
+      },
+      "PaymentProvider" : {
+        "description" : "Refers to which bank is financing the loan request either FranFinance or Hanseatic Bank.",
+        "type" : "string",
+        "enum" : [ "FRF", "HB" ]
+      },
+      "ApplicationRequest" : {
+        "description" : "Filtering the applications by order ID from merchant portal and adding other attributes later.",
+        "type" : "object",
+        "properties" : {
+          "orderId" : {
+            "type" : "string",
+            "example" : "orderID123",
+            "description" : "Order number associated with the payment transaction from merchant website."
+          }
+        }
+      },
+      "ApplicationResponse" : {
+        "description" : "Refers to the redirection to the loan request form either html (to redirect to FranFinance page) or URL ( to redirect to customer journey within Fintechos)",
+        "type" : "string",
+        "allOf" : [ {
+          "format" : "url"
+        }, {
+          "format" : "html"
+        }, {
+          "example" : "https://app-b2cproxy-socgenepos-uat.azurewebsites.net/hblo?auxiliaryDataId==da7ec97e-8c19-4814-87e5-a7aa5063bf00&culture=de-DE"
+        } ]
+      }
+    }
+  }
+}
