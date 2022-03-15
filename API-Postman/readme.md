@@ -1,1 +1,1 @@
-synchronisation avec postman pour les tests API
+synchronization with Postman tool
