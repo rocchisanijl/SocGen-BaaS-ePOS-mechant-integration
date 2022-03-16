@@ -1,7 +1,7 @@
 {
-    "info": {
-        "_postman_id": "930b5f09-a29d-48ac-a550-5bb414b13089",
-        "name": "UAT sprint 2 FIntechOS",
+	"info": {
+		"_postman_id": "ea4b5f76-b73d-492e-a59b-2d5491b60988",
+		"name": "UAT sprint 2 FIntechOS",
 		"description": "Collection for UAT of FTOS delivered ePOS system.\n\n-Run one of the *GetToken* requests, to get the access token from SG Connect. This token is saved as a variable.\n-Run either of the *ProcessAndRedirect* re  requests to send initiate the journey\n-These requests generate a unique orderId in the pre-test to be used by the request. orderId is displayed in the console.\n-For the *ProcessAndRedirect - HB* request, a URL is returned. Copy this into a browser to test the flow.\n-For the *ProcessAndRedirect - FF* request, raw html is returned. Copy this into notepad and save it as a .html file. Then open the file in a browser to continue the journey.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
