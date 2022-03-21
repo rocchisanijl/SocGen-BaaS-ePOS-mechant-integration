@@ -310,13 +310,30 @@
         },
         {
             "name": "do-search",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "id": "b23a1696-c9ca-4a59-8ffb-11ee248b0b21",
+                        "exec": [
+                            "myResponse = pm.response.json();\r",
+                            "pm.collectionVariables.set(\"applicationId\", myResponse[0].applicationId);\r",
+                            "console.log(pm.collectionVariables.get(\"applicationId\"))"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
             "id": "dc86396e-85b6-4219-8273-62bba5ace5f7",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
             "request": {
                 "method": "POST",
                 "header": [],
                 "body": {
                     "mode": "raw",
-                    "raw": "{  \r\n    \"orderId\": \"ME040\"\r\n}",
+                    "raw": "{  \r\n    \"orderId\": \"ORD123aa3\"\r\n}",
                     "options": {
                         "raw": {
                             "language": "json"
@@ -394,19 +411,24 @@
     ],
     "variable": [
         {
-            "id": "df5b60be-b636-4122-a958-c662fddfdd8b",
+            "id": "f97679ad-4f52-4e00-9750-cf51c4209af6",
             "key": "orderId",
             "value": ""
         },
         {
-            "id": "5d96e7f3-387f-44ab-a643-95ca56eee296",
+            "id": "7bb5b843-545b-43ae-b913-ea704040888f",
             "key": "merchant",
             "value": ""
         },
         {
-            "id": "509756b3-69b1-4efa-b20d-1e146a5352b2",
+            "id": "78e97333-e221-491d-a978-bef5efbfe9ed",
             "key": "URL",
             "value": "https://apimgm-socgenepos-uat.azure-api.net/Func-SocGenEPOS-UAT"
+        },
+        {
+            "id": "db272e89-d632-436f-8dc7-9d77ab77b871",
+            "key": "applicationId",
+            "value": "SocGenUATEPOS0420"
         }
     ]
 }
