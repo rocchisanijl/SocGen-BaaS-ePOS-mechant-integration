@@ -280,7 +280,7 @@
           "SKU" : {
             "type" : "string",
             "example" : 20,
-            "description" : "Merchant’s product identifier code."
+            "description" : "Merchantâs product identifier code."
           },
           "shoppingCartItemList" : {
             "$ref" : "#/components/schemas/ShoppingCartItemList"
