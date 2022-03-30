@@ -1,0 +1,28 @@
+title PRESTASHOP integration with new ePOS Payment plugin
+
+
+
+participant Consumer
+
+
+participant PRESTASHOP
+
+
+participant ePOS PRESTASHOP plugin
+
+
+
+participant ePOS (SmartCredit)
+Consumer->PRESTASHOP:Enter check-out process
+PRESTASHOP->ePOS PRESTASHOP plugin:Get list of ePOS Payment methods available\naccording rules:\n1) delivery address\n2) financed amount 
+PRESTASHOP<--ePOS PRESTASHOP plugin:Payment methods returned
+Consumer<-PRESTASHOP:list of payment methods available
+Consumer->PRESTASHOP:Click a ePOS payment method
+PRESTASHOP->ePOS PRESTASHOP plugin:call ePOS plugin payment module\nwith parameters:\n- ePOS payment method\n- amount to financed\n- callback url\n- customer, delivery, billing address\n- customer, delivery, billing contact informations\n- shopping cart detail 
+ePOS PRESTASHOP plugin->ePOS (SmartCredit):SG Connect get token (authentication)\n\nPOST /sgconnect/oauth2/access_token\n?grant_type=client_credentials&scope=API \n
+ePOS PRESTASHOP plugin<-ePOS (SmartCredit):Access Token
+ePOS PRESTASHOP plugin->ePOS (SmartCredit):API Post redirect url or page\n/api/v1/customerApplications/do-initialize
+ePOS PRESTASHOP plugin<-ePOS (SmartCredit):Redirect Url or redirect Page
+Consumer<--ePOS PRESTASHOP plugin:redirect to EPOS journey (external)
+note over Consumer,ePOS (SmartCredit):Epos customer credit financing or payment journey
+Consumer<--ePOS PRESTASHOP plugin:Merchant Call back Url
