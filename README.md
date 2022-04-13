@@ -23,6 +23,8 @@ The SmartCredit journey consist of:
 
 ![This is an image](/documentation/EPOS_flow_technical_guidelines.png)
 
+## SMARTCREDIT status life cycle
+![This is an image](/documentation/Archi/ePOs%20status%20life%20cycle.jpg)
  
 # Authentication
 
