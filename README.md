@@ -57,22 +57,19 @@ An access token is required. A POST to SG CONNECT /access_token endpoint is nece
 
 Example request:
 ~~~
-  POST /sgconnect/oauth2/access_token?grant_type=client_credentials&scope=fooscope+barscope HTTP/1.1
-  Host: sso.sgmarkets.com
-  Authorization: Basic bXljbGllbnRpZDpteWNsaWVudHNlY3JldAo=
-  Origin: mydemoapp.fr.world.socgen
-  Content-Type: application/x-www-form-urlencoded
+  POST /sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid HTTP/1.1
+Host: sso.sgmarkets.com
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic Nzk3ZDI0ZjQtNmZmMi00MmMwLT....
 ~~~
 Example Response:
 ~~~
   HTTP/1.1 200 OK
   Content-Type: application/json
-  {
-    "access_token": "05ebf626-2e71-497b-b9d7-c9c7f2bebaf8",
-    "scope": "fooscope barscope",
-    "id_token": "eyAidHlwIjogIkpXVCIsICJr…K_f05Doop-7dJlT0yjnpmg",
-    "token_type": "Bearer",
-    "expires_in": 599
+  {   "access_token":"eyJ0eXAiOiJKV1QiLCJ...",
+      "scope":"sgx@@origin_network@@Internet openid",
+      "token_type":"Bearer",
+      "expires_in":599}
   }
 ~~~
 Samples of codes are available in different languages.
