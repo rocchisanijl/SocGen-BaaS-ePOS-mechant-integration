@@ -1,0 +1,689 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "SmartCredit (EPOS) eMerchant Customer Application",
+    "description" : "# APIs for launching, managing your SmartCredit journey.\n \n**Main use case** Use this API to be integrated within your merchant web site at check-out process.\n* All API are authenticated with oauth2 `client credential flow`.\n* Please get your merchant credentials to obtain a valid `access token`.\n\n**Availables environements**\n* Production\n* UAT\n\n#### You may need valid `tokens` and `scopes` to access it.\n**Error codes list** \n\n* `400 Bad request` - invalid_payment_mean - Payment Mean: 'xxxx' not found\n* `400 Bad request` - invalid_input_data - Field [Field name] is not a valid [format]\n* `400 Bad request` - invalid_orderId - Order Id: xxxx already exist\n* `400 Bad request` - invalid_query - Wrong query parameters\n* `401 Unauthorized` - invalid_token - API token is invalid, expired, or account associated with key does not have access to that API\n* `403 - Access denied`, the operation is not allowed\n* `404` - Resource was not found.\n",
+    "version" : "1.1.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/FintechOS-EPOS/EPOS/1.1.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://apimgm-socgenepos-dev.azure-api.net",
+    "description" : "ePos UAT environment"
+  }, {
+    "url" : "https://apimgm-socgenepos-prod.azure-api.net",
+    "description" : "ePOS production environment"
+  } ],
+  "paths" : {
+    "/api/v1/customerApplications/do-initialize" : {
+      "post" : {
+        "tags" : [ "Customer Application" ],
+        "summary" : "create loan application",
+        "description" : "Refers to the form that needs to be filled to submit the loan request. Please note that the attributes billingAddress, deliveryAddress, billingContact and deliveryContact are obligatory for FranFinance products.",
+        "operationId" : "newApplication",
+        "requestBody" : {
+          "description" : "Initiate a customer's journey after selecting a payment method",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Application"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "application created",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ApplicationResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-400"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-401"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Access denied, the operation is not allowed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-403"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-404"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "SGConnect" : [ "api.epos-emerchant-initiate-customer-application.v1" ]
+        } ]
+      }
+    },
+    "/api/v1/customerApplications/do-search" : {
+      "post" : {
+        "tags" : [ "Customer Application" ],
+        "summary" : "return list of applications",
+        "description" : "Returns all applications by merchant if the Application Request is empty it filters based on ApplicationRequest attributes otherwise.",
+        "operationId" : "getApplications",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ApplicationRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "list of applications retreived",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Applications"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-400"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-401"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Access denied, the operation is not allowed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-403"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-404"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "SGConnect" : [ "api.epos-emerchant-initiate-customer-application.v1" ]
+        } ]
+      }
+    },
+    "/api/v1/customerApplications/{applicationId}" : {
+      "get" : {
+        "tags" : [ "Customer Application" ],
+        "summary" : "get application by id",
+        "description" : "get application by id",
+        "operationId" : "getApplicationById",
+        "parameters" : [ {
+          "name" : "applicationId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "application retreived",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApplicationDetails"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-401"
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Access denied, the operation is not allowed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-403"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Error-404"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "SGConnect" : [ "api.epos-emerchant-initiate-customer-application.v1" ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Application" : {
+        "required" : [ "amount", "customerAddress", "customerContact", "customerId", "normalReturnUrl", "orderId", "paymentMean", "shoppingCartDetail" ],
+        "type" : "object",
+        "properties" : {
+          "normalReturnUrl" : {
+            "type" : "string",
+            "description" : "The Url to redirect the customer after he finishes his journey.",
+            "format" : "url",
+            "example" : "https://returnURL/"
+          },
+          "paymentMean" : {
+            "$ref" : "#/components/schemas/PaymentMean"
+          },
+          "amount" : {
+            "type" : "number",
+            "description" : "Total financed amount.",
+            "format" : "decimal",
+            "example" : 114
+          },
+          "customerId" : {
+            "type" : "string",
+            "description" : "The customer's Id in the merchant's website.",
+            "example" : "customer01"
+          },
+          "orderId" : {
+            "type" : "string",
+            "description" : "The order's Id in the merchant's website.",
+            "example" : "ORD229"
+          },
+          "customerAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "billingAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "deliveryAddress" : {
+            "$ref" : "#/components/schemas/CustomerAddress"
+          },
+          "customerContact" : {
+            "$ref" : "#/components/schemas/CustomerContact"
+          },
+          "billingContact" : {
+            "$ref" : "#/components/schemas/Contact"
+          },
+          "deliveryContact" : {
+            "$ref" : "#/components/schemas/Contact"
+          },
+          "shoppingCartDetail" : {
+            "$ref" : "#/components/schemas/ShoppingCartDetail"
+          }
+        },
+        "description" : "Refers to the form that needs to be filled to submit the loan request. Please note that the attributes billingAddress, deliveryAddress, billingContact and deliveryContact are obligatory for FranFinance products."
+      },
+      "CustomerAddress" : {
+        "required" : [ "city", "country", "street", "zipCode" ],
+        "properties" : {
+          "city" : {
+            "type" : "string",
+            "description" : "City of the address.",
+            "example" : "Paris"
+          },
+          "street" : {
+            "type" : "string",
+            "description" : "Street of the address.",
+            "example" : "93 Avenue Embrun"
+          },
+          "zipCode" : {
+            "type" : "number",
+            "description" : "zipcode of the address.",
+            "example" : 2560
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "ISO-3166-1 with two digits",
+            "example" : "FR"
+          }
+        },
+        "description" : "Displaying the customer's personal contact address to deliver the ordered products from merchant."
+      },
+      "CustomerContact" : {
+        "required" : [ "email", "firstName", "lastName", "mobile", "phone" ],
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "description" : "First name of the contact.",
+            "example" : "David"
+          },
+          "lastName" : {
+            "type" : "string",
+            "description" : "Last name of the contact.",
+            "example" : "David"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "contact's email address with valid format.",
+            "example" : "David@David.com"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "contact's title.",
+            "enum" : [ "Mr.", "Mrs." ]
+          },
+          "mobile" : {
+            "type" : "string",
+            "description" : "Mobile phone number for the contact.",
+            "format" : "/^\\+(?:[0-9] ?){6,14}[0-9]$/",
+            "example" : "+484749393"
+          },
+          "phone" : {
+            "type" : "string",
+            "description" : "Telephone number for the contact.",
+            "format" : "/^\\+(?:[0-9] ?){6,14}[0-9]$/",
+            "example" : "+484749393"
+          }
+        },
+        "description" : "Displaying the customer's personal contact details including first name, last name and mobile phone."
+      },
+      "Contact" : {
+        "required" : [ "email", "firstName", "lastName", "mobile", "phone" ],
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "description" : "First name of the contact.",
+            "example" : "David"
+          },
+          "lastName" : {
+            "type" : "string",
+            "description" : "Last name of the contact.",
+            "example" : "David"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "contact's email address with valid format.",
+            "example" : "David@David.com"
+          },
+          "mobile" : {
+            "type" : "string",
+            "description" : "Mobile phone number for the contact.",
+            "format" : "/^\\+(?:[0-9] ?){6,14}[0-9]$/",
+            "example" : "+484749393"
+          },
+          "phone" : {
+            "type" : "string",
+            "description" : "Telephone number for the contact.",
+            "format" : "/^\\+(?:[0-9] ?){6,14}[0-9]$/",
+            "example" : "+484749393"
+          }
+        },
+        "description" : "Displaying the customer's personal contact details including first name, last name and mobile phone."
+      },
+      "ShoppingCartDetail" : {
+        "required" : [ "SKU", "mainProduct", "shoppingCartItemList", "shoppingCartTotalAmount", "shoppingCartTotalQuantity" ],
+        "type" : "object",
+        "properties" : {
+          "mainProduct" : {
+            "type" : "string",
+            "description" : "The most expensive product in the shopping cart.",
+            "example" : "TV"
+          },
+          "shoppingCartTotalAmount" : {
+            "type" : "number",
+            "description" : "Total amount of all products in the basket. This amount includes taxes but doesn't include any charges, fees and discounts.",
+            "format" : "decimal",
+            "example" : 95
+          },
+          "shoppingCartTotalQuantity" : {
+            "type" : "number",
+            "description" : "Total quantity of all products in the basket.",
+            "example" : 2
+          },
+          "SKU" : {
+            "type" : "string",
+            "description" : "Merchant’s product identifier code.",
+            "example" : "20"
+          },
+          "shoppingCartItemList" : {
+            "$ref" : "#/components/schemas/ShoppingCartItemList"
+          }
+        },
+        "description" : "Providing details about the products selected by client in the basket from merchant portal such as main product,the total amount and quantity of the cart."
+      },
+      "ShoppingCartItemList" : {
+        "required" : [ "productDescription", "productName", "productQuantity", "productUnitAmount" ],
+        "type" : "object",
+        "properties" : {
+          "productName" : {
+            "type" : "string",
+            "description" : "Name of the ordered product.",
+            "example" : "PANTALON B MAGO"
+          },
+          "productUnitAmount" : {
+            "type" : "number",
+            "description" : "Unit amount of the product.",
+            "format" : "decimal",
+            "example" : 47.5
+          },
+          "productQuantity" : {
+            "type" : "number",
+            "description" : "Quantity of products in the shopping cart.",
+            "example" : 2
+          },
+          "productDescription" : {
+            "type" : "string",
+            "description" : "Detailed description of the ordered product."
+          }
+        },
+        "description" : "Displaying the details of each product from shopping cart such as amount,quantity and product name."
+      },
+      "Applications" : {
+        "properties" : {
+          "articles" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ApplicationDetails"
+            }
+          }
+        },
+        "description" : "Refers to the details of an application"
+      },
+      "ApplicationDetails" : {
+        "type" : "object",
+        "properties" : {
+          "applicationId" : {
+            "type" : "string",
+            "description" : "Customer application reference."
+          },
+          "orderId" : {
+            "type" : "string",
+            "description" : "Merchant order Id ID."
+          },
+          "customerId" : {
+            "type" : "string",
+            "description" : "Merchant customer Id reference."
+          },
+          "createdOn" : {
+            "type" : "string",
+            "description" : "Customer application date creation.",
+            "format" : "date-time"
+          },
+          "modifiedOn" : {
+            "type" : "string",
+            "description" : "Customer application modification date.",
+            "format" : "date-time"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/Status"
+          },
+          "paymentProvider" : {
+            "$ref" : "#/components/schemas/PaymentProvider"
+          },
+          "paymentProviderLabel" : {
+            "type" : "string",
+            "description" : "Name of payment provider."
+          },
+          "paymentMean" : {
+            "$ref" : "#/components/schemas/PaymentMean"
+          },
+          "paymentMeanLabel" : {
+            "type" : "string",
+            "description" : "Payment provider method label."
+          }
+        },
+        "description" : "Refers to the details of an application returned by FTOS."
+      },
+      "PaymentMean" : {
+        "type" : "string",
+        "description" : "Refers to the type of financing product available for customers, in total 4 products for FRF and one product for HB (REVOLVINGPOS).",
+        "enum" : [ "FRF_3X", "FRF_4X", "FRF_3X_F", "FRF_4X_F", "REVOLVINGPOS" ]
+      },
+      "Status" : {
+        "type" : "string",
+        "description" : "Displaying the status of the originated application through the different phases of the loan request.",
+        "enum" : [ "INITIALIZED", "PRE-ACCEPTED", "KYC SUCCESSFUL", "ACCEPTED", "REJECTED", "ABORTED" ]
+      },
+      "PaymentProvider" : {
+        "type" : "string",
+        "description" : "Refers to which bank is financing the loan request either FranFinance or Hanseatic Bank.",
+        "enum" : [ "FRF", "HB" ]
+      },
+      "ApplicationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "orderId" : {
+            "type" : "string",
+            "description" : "Order number associated with the payment transaction from merchant website.",
+            "example" : "orderID123"
+          }
+        },
+        "description" : "Filtering the applications by order ID from merchant portal and adding other attributes later."
+      },
+      "ApplicationResponse" : {
+        "type" : "string",
+        "description" : "Refers to the redirection to the loan request form either html (to redirect to FranFinance page) or URL ( to redirect to customer journey within Fintechos)",
+        "allOf" : [ {
+          "format" : "url"
+        }, {
+          "format" : "html"
+        }, {
+          "example" : "https://app-b2cproxy-socgenepos-uat.azurewebsites.net/hblo?auxiliaryDataId==da7ec97e-8c19-4814-87e5-a7aa5063bf00&culture=de-DE"
+        } ]
+      },
+      "Error-401" : {
+        "title" : "Error 401 - Unauthorized",
+        "type" : "object",
+        "properties" : {
+          "detail" : {
+            "type" : "array",
+            "description" : "error details",
+            "items" : {
+              "$ref" : "#/components/schemas/ErrorDetails-401"
+            }
+          }
+        },
+        "description" : "Authentication failed or user doesn’t have permissions for requested operation"
+      },
+      "ErrorDetails-401" : {
+        "title" : "Error 401 - Unauthorized - Details",
+        "required" : [ "error", "message" ],
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "string",
+            "description" : "A programmatic error code: * `invalid_token` - API token is invalid, expired, or account associated with key does not have access to that API.\n",
+            "example" : "invalid_token",
+            "enum" : [ "invalid_token" ]
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A human readable description of the problem",
+            "example" : "API key is missing, invalid or expired."
+          }
+        }
+      },
+      "Error-400" : {
+        "title" : "Error 400 - Bad Request",
+        "type" : "object",
+        "properties" : {
+          "detail" : {
+            "type" : "array",
+            "description" : "error details",
+            "items" : {
+              "$ref" : "#/components/schemas/ErrorDetails-400"
+            }
+          }
+        },
+        "description" : "The request could not be understood or required parameters were missing"
+      },
+      "ErrorDetails-400" : {
+        "title" : "Error 400 - Bad Request - Details",
+        "type" : "object",
+        "properties" : {
+          "error" : {
+            "type" : "string",
+            "description" : "A programmatic error code:\n * `invalid_payment_mean` - Payment Mean: 'xxxx' not found\n * `invalid_input_data` - 'Field [Field name] is not a valid [format]'\n * `invalid_orderId` - Order Id: xxxx already exist.\n * `invalid_query` - Wrong query parameters. \n",
+            "example" : "invalid_orderId",
+            "enum" : [ "invalid_payment_mean", "invalid_input_data", "invalid_orderId", "invalid_query" ]
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A human readable description of the problem",
+            "example" : "Order Id: xxxx already exist"
+          }
+        }
+      },
+      "Error-404" : {
+        "title" : "Error 404 - Not Found",
+        "required" : [ "errorCode", "message" ],
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "type" : "number",
+            "description" : "A programmatic error code: * `404` - Resource was not found.\n",
+            "example" : 404,
+            "enum" : [ 404 ]
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A human readable description of the problem",
+            "example" : "Resource was not found."
+          }
+        },
+        "description" : "Resource was not found."
+      },
+      "Error-403" : {
+        "title" : "Error 403 - Forbidden",
+        "required" : [ "errorCode", "message" ],
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "type" : "number",
+            "description" : "* `403` - Access to the requested resource has been denied\n",
+            "example" : 403,
+            "enum" : [ 403 ]
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "A human readable description of the problem",
+            "example" : "The server understood the request but refuses to authorize it"
+          }
+        },
+        "description" : "Access denied, the operation is not allowed"
+      }
+    },
+    "securitySchemes" : {
+      "SGConnect" : {
+        "type" : "oauth2",
+        "description" : "OAuth 2 is used to retreive the token using the client's credentials client_id and client_secret this returned token will be used to access all APIs",
+        "flows" : {
+          "clientCredentials" : {
+            "tokenUrl" : "https://sso.sgmarkets.com/sgconnect/oauth2/access_token",
+            "scopes" : {
+              "api.epos-emerchant-initiate-customer-application.v1" : "normal scope v1 API"
+            }
+          }
+        }
+      }
+    }
+  }
+}
