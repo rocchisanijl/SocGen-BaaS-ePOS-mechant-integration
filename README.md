@@ -57,20 +57,21 @@ An access token is required. A POST to SG CONNECT /access_token endpoint is nece
 
 Example request:
 ~~~
-  POST /sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid HTTP/1.1
+POST /sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid api.epos-emerchant-initiate-customer-application.v1 HTTP/1.1
 Host: sso.sgmarkets.com
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic Nzk3ZDI0ZjQtNmZmMi00MmMwLT....
+Authorization: Basic Nzk3ZDI0ZjQtNmZ...
 ~~~
 Example Response:
 ~~~
   HTTP/1.1 200 OK
   Content-Type: application/json
-  {   "access_token":"eyJ0eXAiOiJKV1QiLCJ...",
-      "scope":"sgx@@origin_network@@Internet openid",
-      "token_type":"Bearer",
-      "expires_in":599}
-  }
+    {
+    "access_token":"eyJ0eXAiOiJKV1QiLCJraWQiOiJaVEJ0N3ZxRVlTV056UHlkd0...",
+    "scope":"sgx@@origin_network@@Internet openid api.epos-emerchant-initiate-customer-application.v1",
+    "token_type":"Bearer",
+    "expires_in":599
+    }
 ~~~
 Samples of codes are available in different languages.
 > IMPORTANT: 
