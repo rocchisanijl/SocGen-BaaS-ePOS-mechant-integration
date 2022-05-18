@@ -12,6 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "dc05997f-a7f8-4e79-81a9-a7dcf61e0785",
 						"exec": [
 							" var token = pm.response.json().body ;\r",
 							" pm.globals.set('accessToken',pm.response.json().access_token);\r",
@@ -23,6 +24,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "ea97001c-55aa-46a3-9880-ef0d4c5d66e8",
 						"exec": [
 							"var merchant = \"EM1\"\r",
 							"pm.collectionVariables.set(\"merchant\",merchant);\r",
@@ -59,7 +61,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://sso.sgmarkets.com/sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid",
+					"raw": "https://sso.sgmarkets.com/sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid api.epos-emerchant-initiate-customer-application.v1",
 					"protocol": "https",
 					"host": [
 						"sso",
@@ -78,7 +80,7 @@
 						},
 						{
 							"key": "scope",
-							"value": "openid"
+							"value": "openid api.epos-emerchant-initiate-customer-application.v1"
 						}
 					]
 				}
@@ -91,6 +93,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "477b0a68-7ed8-4327-a0ef-47bd442849e8",
 						"exec": [
 							" var token = pm.response.json().body ;\r",
 							" pm.globals.set('accessToken',pm.response.json().access_token);\r",
@@ -102,6 +105,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "c1dedd5d-74b2-49fd-b75f-dbb806e378ec",
 						"exec": [
 							"var merchant = \"EM2\"\r",
 							"pm.collectionVariables.set(\"merchant\",merchant);\r",
@@ -138,7 +142,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://sso.sgmarkets.com/sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid",
+					"raw": "https://sso.sgmarkets.com/sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid api.epos-emerchant-initiate-customer-application.v1",
 					"protocol": "https",
 					"host": [
 						"sso",
@@ -157,7 +161,7 @@
 						},
 						{
 							"key": "scope",
-							"value": "openid"
+							"value": "openid api.epos-emerchant-initiate-customer-application.v1"
 						}
 					]
 				}
@@ -477,27 +481,27 @@
 	],
 	"variable": [
 		{
-			"id": "9f69fc49-d0f6-4085-8052-aef6fac73a1d",
+			"id": "30526a3e-d271-4429-92f2-d57ba29f97ac",
 			"key": "orderId",
 			"value": ""
 		},
 		{
-			"id": "9f2a5a0b-a36c-411d-8223-32c03c112511",
+			"id": "886bc9ee-a563-4a4e-9289-f138f35b5159",
 			"key": "merchant",
 			"value": ""
 		},
 		{
-			"id": "2a3be6f8-aa16-4b9a-9eb3-f663ba9270b1",
+			"id": "ac3b8e12-9856-4cde-a847-c378d23aba86",
 			"key": "URL",
 			"value": "https://apimgm-socgenepos-uat.azure-api.net/Func-SocGenEPOS-UAT"
 		},
 		{
-			"id": "b4f8b4c5-3421-45d6-b3fa-faf4b1236957",
+			"id": "1050c508-1406-4951-944f-a7f5201556a5",
 			"key": "applicationId",
 			"value": "SocGenUATEPOS0420"
 		},
 		{
-			"id": "6dfcbf88-ea1f-47cd-8fc3-24feb366fd36",
+			"id": "f56c8d38-328b-49b1-a1de-9c890f073e7c",
 			"key": "access_token",
 			"value": "",
 			"type": "string",
