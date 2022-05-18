@@ -477,27 +477,27 @@
 	],
 	"variable": [
 		{
-			"id": "412152a8-7dbb-4c1b-9e7b-7f8e1433a8ab",
+			"id": "9f69fc49-d0f6-4085-8052-aef6fac73a1d",
 			"key": "orderId",
 			"value": ""
 		},
 		{
-			"id": "966075d8-20a9-400b-a7e3-abd5f8a862b2",
+			"id": "9f2a5a0b-a36c-411d-8223-32c03c112511",
 			"key": "merchant",
 			"value": ""
 		},
 		{
-			"id": "cd05f0c5-528a-4749-b73f-b3d01de6c83f",
+			"id": "2a3be6f8-aa16-4b9a-9eb3-f663ba9270b1",
 			"key": "URL",
 			"value": "https://apimgm-socgenepos-uat.azure-api.net/Func-SocGenEPOS-UAT"
 		},
 		{
-			"id": "df05e614-2efc-4645-8656-2f52c0286c00",
+			"id": "b4f8b4c5-3421-45d6-b3fa-faf4b1236957",
 			"key": "applicationId",
 			"value": "SocGenUATEPOS0420"
 		},
 		{
-			"id": "2dad37b1-29fd-4aaa-8b03-d15254ac03fa",
+			"id": "6dfcbf88-ea1f-47cd-8fc3-24feb366fd36",
 			"key": "access_token",
 			"value": "",
 			"type": "string",
