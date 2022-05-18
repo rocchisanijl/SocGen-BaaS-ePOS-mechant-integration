@@ -1,0 +1,507 @@
+{
+	"info": {
+		"_postman_id": "f0e0835d-9471-4454-ba7c-032cb23ce89b",
+		"name": "UAT sprint 3 new API 1.1.0",
+		"description": "Collection for UAT of FTOS delivered ePOS system.\n\n-Run one of the *GetToken* requests, to get the access token from SG Connect. This token is saved as a variable.\n-Run either of the *ProcessAndRedirect* re  requests to send initiate the journey\n-These requests generate a unique orderId in the pre-test to be used by the request. orderId is displayed in the console.\n-For the *ProcessAndRedirect - HB* request, a URL is returned. Copy this into a browser to test the flow.\n-For the *ProcessAndRedirect - FF* request, raw html is returned. Copy this into notepad and save it as a .html file. Then open the file in a browser to continue the journey.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetToken - eMerchant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" var token = pm.response.json().body ;\r",
+							" pm.globals.set('accessToken',pm.response.json().access_token);\r",
+							" console.log(pm.response.json().access_token);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var merchant = \"EM1\"\r",
+							"pm.collectionVariables.set(\"merchant\",merchant);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "d8c2e648-ce59-4f74-9594-989e69a57ce7",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "3l04hacc44g8kbd3eh64fldmg19e",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "797d24f4-6ff2-42c0-89f3-01a2989a0ae9",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://sso.sgmarkets.com/sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid",
+					"protocol": "https",
+					"host": [
+						"sso",
+						"sgmarkets",
+						"com"
+					],
+					"path": [
+						"sgconnect",
+						"oauth2",
+						"access_token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						},
+						{
+							"key": "scope",
+							"value": "openid"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetToken - eMerchant2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" var token = pm.response.json().body ;\r",
+							" pm.globals.set('accessToken',pm.response.json().access_token);\r",
+							" console.log(pm.response.json().access_token);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var merchant = \"EM2\"\r",
+							"pm.collectionVariables.set(\"merchant\",merchant);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "464d42b0-29a0-447f-9290-429b3ec8aa04",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "23c028cddg0239mgk0ce91h4cmm1g",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "12bea33e-0746-4022-a8d3-f487d04ec54b",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://sso.sgmarkets.com/sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid",
+					"protocol": "https",
+					"host": [
+						"sso",
+						"sgmarkets",
+						"com"
+					],
+					"path": [
+						"sgconnect",
+						"oauth2",
+						"access_token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						},
+						{
+							"key": "scope",
+							"value": "openid"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "do-initialize FF",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74f7ecfd-0706-4fbd-9484-5bde0fb22bf4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "caff35df-6da2-4a05-bbd3-941714f3113f",
+						"exec": [
+							"var orderId = \"UAT_\" + pm.variables.get(\"merchant\") + \"_\" + pm.variables.replaceIn('{{$randomHexColor}}');\r",
+							"console.log(orderId);\r",
+							"pm.collectionVariables.set(\"orderId\",orderId);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "dd72632a-4dcd-4cac-8392-b27569f990aa",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"value": "ada861fa-7ded-4cb3-b0ff-bfbc20ce1eac",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 150,\r\n    \"customerId\": \"701943\",\r\n    \"normalReturnUrl\": \"https://fintechos.com/\",\r\n    \"shoppingCartDetail\": {\r\n        \"mainProduct\": \"PANTALON B MAGO\",\r\n        \"shoppingCartTotalAmount\": \"9500\",\r\n        \"shoppingCartTotalQuantity\": \"2\",\r\n        \"SKU\": \"50\",\r\n        \"shoppingCartItemList\": {\r\n            \"productName\": \"PANTALON B MAGO\",\r\n            \"productUnitAmount\": \"4750\",\r\n            \"productQuantity\": \"2\",\r\n            \"productDescription\": \"\"\r\n        }\r\n    },\r\n    \"customerAddress\": {\r\n       \"city\": \"GAP\",\r\n        \"street\": \"93 Avenue d'Embrun\",\r\n        \"zipCode\": \"05000\",\r\n        \"country\": \"FR\"\r\n    },\r\n    \"billingAddress\": {\r\n        \"city\": \"Paris\",\r\n        \"street\": \"97 Avenue d'Embrun\",\r\n        \"zipCode\": \"06000\",\r\n        \"country\": \"FR\",\r\n        \"company\": \"\"\r\n    },\r\n    \"deliveryAddress\": {\r\n        \"city\": \"Paris\",\r\n        \"street\": \"voltaire\",\r\n        \"zipCode\": \"75000\",\r\n        \"country\": \"FR\",\r\n        \"company\": \"\"\r\n    },\r\n    \"customerContact\": {\r\n       \"title\": \"Mr.\",\r\n        \"legalId\": \"\",\r\n        \"email\": \"customer@email.com\",\r\n        \"lastName\": \"test\",\r\n        \"firstName\": \"david\",\r\n        \"mobile\": \"+330676188860\",\r\n        \"phone\": \"+330484749393\"\r\n    },\r\n    \"billingContact\": {\r\n        \"legalId\": \"\",\r\n        \"email\": \"customer@email.com\",\r\n        \"lastName\": \"GAP\",\r\n        \"firstName\": \"Maryon\",\r\n        \"mobile\": \"+330676188860\",\r\n        \"phone\": \"+330484749393\"\r\n    },\r\n     \"deliveryContact\": {\r\n        \"legalId\": \"\",\r\n        \"email\": \"customer@email.com\",\r\n        \"lastName\": \"Durand\",\r\n        \"firstName\": \"John\",\r\n        \"mobile\": \"+330676188860\",\r\n        \"phone\": \"+330678020202\"\r\n    },\r\n    \"orderId\": \"{{orderId}}\",\r\n    \"paymentMean\": \"FRF_3X\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/customerApplications/do-initialize",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customerApplications",
+						"do-initialize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "do-initialize HB",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5b40eaf-c902-43b6-b428-a9189b8e014c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "82db98c0-ee2b-4546-9320-e0363439d34d",
+						"exec": [
+							"var orderId = \"UAT_\" + pm.variables.get(\"merchant\") + \"_\" + pm.variables.replaceIn('{{$randomHexColor}}');\r",
+							"console.log(orderId);\r",
+							"pm.collectionVariables.set(\"orderId\",orderId);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "a4cde147-a55b-4088-b0cf-49c7d14e2b7a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"amount\": 1400,\r\n   \"customerId\": \"701943\",\r\n   \"normalReturnUrl\": \"https://fintechos.com/\",\r\n   \"shoppingCartDetail\": {\r\n       \"mainProduct\": \"PANTALON B MAGO\",\r\n       \"shoppingCartTotalAmount\": \"9500\",\r\n       \"shoppingCartTotalQuantity\": \"2\",\r\n       \"SKU\": \"50\",\r\n       \"shoppingCartItemList\": \r\n       [\r\n           {\r\n           \"productName\": \"PANTALON B MAGO\",\r\n           \"productUnitAmount\": \"4750\",\r\n           \"productQuantity\": \"2\",\r\n           \"productDescription\": \"\"\r\n            },\r\n            {\r\n           \"productName\": \"PANTALON B MAGO\",\r\n           \"productUnitAmount\": \"4750\",\r\n           \"productQuantity\": \"2\",\r\n           \"productDescription\": \"\"\r\n            }\r\n       ]\r\n   },\r\n   \"customerAddress\": {\r\n      \"city\": \"GAP\",\r\n       \"street\": \"93 Avenue d'Embrun\",\r\n       \"zipCode\": \"05000\",\r\n       \"country\": \"DE\"\r\n   },\r\n   \"billingAddress\": {\r\n       \"city\": \"Paris\",\r\n       \"street\": \"97 Avenue d'Embrun\",\r\n       \"zipCode\": \"06000\",\r\n       \"country\": \"DE\",\r\n       \"company\": \"\"\r\n   },\r\n   \"deliveryAddress\": {\r\n       \"city\": \"Paris\",\r\n       \"street\": \"voltaire\",\r\n       \"zipCode\": \"75000\",\r\n       \"country\": \"DE\",\r\n       \"company\": \"\"\r\n   },\r\n   \"customerContact\": {\r\n        \"title\": \"Mr.\",\r\n       \"legalId\": \"\",\r\n       \"email\": \"customer@email.com\",\r\n       \"lastName\": \"test\",\r\n       \"firstName\": \"david\",\r\n       \"mobile\": \"+49 0676188860\",\r\n       \"phone\": \"+49 0484749393\"\r\n   },\r\n   \"billingContact\": {\r\n       \"legalId\": \"\",\r\n       \"email\": \"customer@email.com\",\r\n       \"lastName\": \"GAP\",\r\n       \"firstName\": \"Maryon\",\r\n       \"mobile\": \"+49 0676188860\",\r\n       \"phone\": \"+49 0484749393\"\r\n   },\r\n    \"deliveryContact\": {\r\n       \"legalId\": \"\",\r\n       \"email\": \"customer@email.com\",\r\n       \"lastName\": \"Durand\",\r\n       \"firstName\": \"John\",\r\n       \"mobile\": \"+49 0676188860\",\r\n       \"phone\": \"+49 0678020202\"\r\n   },\r\n   \"orderId\": \"{{orderId}}\",\r\n   \"paymentMean\": \"REVOLVINGPOS\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/customerApplications/do-initialize",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customerApplications",
+						"do-initialize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "do-search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b23a1696-c9ca-4a59-8ffb-11ee248b0b21",
+						"exec": [
+							"myResponse = pm.response.json();\r",
+							"pm.collectionVariables.set(\"applicationId\", myResponse[0].applicationId);\r",
+							"console.log(pm.collectionVariables.get(\"applicationId\"))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "80cbffb0-c5c9-4f04-a6a2-9084607de064",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"orderId\": \"UAT_EM1_#6f540e\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/customerApplications/do-search",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customerApplications",
+						"do-search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get application by Id",
+			"id": "5e84c7ca-5b13-49af-93dd-77091fcbe026",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/v1/customerApplications/SocGenDEVEPOS1512",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"customerApplications",
+						"SocGenDEVEPOS1512"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenType",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "accessToken",
+				"value": "eyJ0eXAiOiJKV1QiLCJraWQiOiJaVEJ0N3ZxRVlTV056UHlkd0tCbE5IR1QzVnc9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI3OTdkMjRmNC02ZmYyLTQyYzAtODlmMy0wMWEyOTg5YTBhZTkiLCJjdHMiOiJPQVVUSDJfU1RBVEVMRVNTX0dSQU5UIiwiYXVkaXRUcmFja2luZ0lkIjoiNjFlN2FhZDUtZjdlMi00NGNjLWEwY2EtZWFhMzY4OWU3ZTgwLTI0MTY4NjIyMyIsImlzcyI6Imh0dHBzOi8vc3NvLnNnbWFya2V0cy5jb206NDQzL3NnY29ubmVjdC9vYXV0aDIiLCJ0b2tlbk5hbWUiOiJhY2Nlc3NfdG9rZW4iLCJ0b2tlbl90eXBlIjoiQmVhcmVyIiwiYXV0aEdyYW50SWQiOiIwekRlbFI0MmtEUTNPdTExSTMtNFRKdEd5bTgiLCJjbGllbnRfaWQiOiI3OTdkMjRmNC02ZmYyLTQyYzAtODlmMy0wMWEyOTg5YTBhZTkiLCJhdWQiOiI3OTdkMjRmNC02ZmYyLTQyYzAtODlmMy0wMWEyOTg5YTBhZTkiLCJuYmYiOjE2NTI4Njc5MzEsImdyYW50X3R5cGUiOiJjbGllbnRfY3JlZGVudGlhbHMiLCJzY29wZSI6WyJzZ3hAQG9yaWdpbl9uZXR3b3JrQEBJbnRlcm5ldCIsIm9wZW5pZCJdLCJhdXRoX3RpbWUiOjE2NTI4Njc5MzEsInJlYWxtIjoiLyIsImV4cCI6MTY1Mjg2ODUzMSwiaWF0IjoxNjUyODY3OTMxLCJleHBpcmVzX2luIjo2MDAsImp0aSI6IlloRGQ5MVpHSFE5aktqV3BvVTdkV0hka1c1dyJ9.NZMZLru9Y9pvXMODt2eWfE8LvIfiW4JDCQDN6-WFq61xcUE6Q8SYlTO8bdWGbKujf8b5i-UUso84XHL9S4Zdt2t524bTudNSTWYiBVseqZpUGVYCWnyerHTlY6ye40heF1ngVNweBmEACbVOgfIL0vO8LXbexygnwW69PChUh0GW7igEf0o1_wEbvOfhM9uruQBD4Wl7GbdRAf2OBtNqQPRlvlcs4fnwIJ4COJPqa7yAh1zjX_aznE12mfQE0Fn7fpybhTjU8L1zVHj5xc9kWH4tu1llJrAeJBmKVtPKezHhqp3mdzgDVW6OHUm_j4p_S7mycDPEBLlv97HkG01AnQ",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "access_token",
+				"type": "string"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "client_credentials",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "3l04hacc44g8kbd3eh64fldmg19e",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "797d24f4-6ff2-42c0-89f3-01a2989a0ae9",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://sso.sgmarkets.com/sgconnect/oauth2/access_token?grant_type=client_credentials&scope=openid",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6cf22fb0-5f91-4a43-b548-7009847ab14d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "349cb561-5b0e-4bb9-82f9-c5daa6cbcd76",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "412152a8-7dbb-4c1b-9e7b-7f8e1433a8ab",
+			"key": "orderId",
+			"value": ""
+		},
+		{
+			"id": "966075d8-20a9-400b-a7e3-abd5f8a862b2",
+			"key": "merchant",
+			"value": ""
+		},
+		{
+			"id": "cd05f0c5-528a-4749-b73f-b3d01de6c83f",
+			"key": "URL",
+			"value": "https://apimgm-socgenepos-uat.azure-api.net/Func-SocGenEPOS-UAT"
+		},
+		{
+			"id": "df05e614-2efc-4645-8656-2f52c0286c00",
+			"key": "applicationId",
+			"value": "SocGenUATEPOS0420"
+		},
+		{
+			"id": "2dad37b1-29fd-4aaa-8b03-d15254ac03fa",
+			"key": "access_token",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
