@@ -9,11 +9,11 @@ The SmartCredit journey consist of:
      - Some script sample is provided on how selecting the right payment method. For instance, prerequisite is that the place of residence of the applicant is in the specific country of the financing service provider. Scripts are customizable according your needs.
   4. Customer is redirecting to the SmartCredit journey. According the payment method selected it will be either a fiancing credit (German resident cutsomers) or a split payment journey (French resident customers).
      - Use API /access_token to get your access token (see Authentication chapter below)
-     - Use API [/api/v1/customerApplications/do-initialize](https://app.swaggerhub.com/apis/SG.BaaS.SmartCredit/epos-e_merchant_customer_application/1.1.0#/Customer%20Application/newApplication) to get redirect url or page
+     - Use API [/api/v1/customerApplications/do-initialize](https://app.swaggerhub.com/apis-docs/SG.BaaS/smart-credit_epos_e_merchant_customer_application/1.1.0#/Customer%20Application/newApplication) to get redirect url or page
   5. Customer has to fill in the application form and submits it for an instant approval.
   6. In case of a credit journey after **PRE-ACCEPTED** approval, the applicant is re-directed to our KYC partner Web ID to do a legitimation and an e-signing of the contract. in case **KYC-SUCCESSFUL**, financing demand will be finalized on Lenders side. 
   8. On nominal status, the application demand (credit or payment) is **ACCEPTED**. Merchant can dispatch the goods.
-     - Use API [/api/v1/customerApplications/do-search](https://app.swaggerhub.com/apis/SG.BaaS.SmartCredit/epos-e_merchant_customer_application/#/Customer%20Application/getApplications) to get status of a customer demand or consult your [merchant portal](https://app-portal-socgenepos-prod.ondisplayftos.com/Main#/page/home/index) 
+     - Use API [/api/v1/customerApplications/do-search](https://app.swaggerhub.com/apis-docs/SG.BaaS/smart-credit_epos_e_merchant_customer_application/1.1.0#/Customer%20Application/getApplications) to get status of a customer demand or consult your [merchant portal](https://app-portal-socgenepos-prod.ondisplayftos.com/Main#/page/home/index) 
   9. Other possible statuses are:
      - **REJECTED**: application demand is rejected. Customer is redirected to the merchant website to select another payment method.
      - **ABORTED**: application demand encountered some problem. It could be technical, time-out or any other problems.
