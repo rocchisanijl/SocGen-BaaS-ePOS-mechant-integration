@@ -86,8 +86,8 @@ As of today, no webhooks are available yet, but this is part of backlog. It will
 
 # Plugins
 CMS plugins (Prestashop, Magento, Shopify …) are not available yet, but this is part of backlog. 
-~~~
-**New !** A prestashop plugin for 1.6 and 1.7 is now available! see documentation and download [here](/plugins/PRESTASHOP) 
-~~~
+
+> New !** A prestashop plugin for 1.6 and 1.7 is now available! see documentation and download [here](/plugins/PRESTASHOP) 
+
 # Give us your feedback
 We are pleased to receive your feedback on this documentation or any suggestion you may have. Feel free to use our [Slack](https://slack.com) Socgen-BaaS-SmartCredit integration  channel (connect to slack and enter "socgenbaassma-hcq2071.com" to join our channel).  
